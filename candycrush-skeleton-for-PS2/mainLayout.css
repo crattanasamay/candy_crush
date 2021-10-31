@@ -15,8 +15,8 @@
 
 
 table{
-  width:360px;
-  height: 360px;
+  width:320px;
+  height: 320px;
 }
 
 tr{
@@ -30,8 +30,8 @@ td{
 
 
 #board{
-  height: 360x;
-  width: 360px;
+  height: 320x;
+  width: 320px;
   border: 1px solid black;
   
 }
