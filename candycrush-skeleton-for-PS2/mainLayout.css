@@ -6,13 +6,17 @@
 .container{
   width:100%
 }
-#mainColumn {
-  outline: 1px dashed orange;
-  height: 500px;
-  width:50%;
 
+.col-md-4{
+  text-align: center;
+  height:500px;
+  width: 25%;
 }
 
+#game-board{
+  height:360px;
+  width: 360px;
+}
 
 
 /* Your css code here! */
