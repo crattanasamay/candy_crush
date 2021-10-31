@@ -3,9 +3,16 @@
  */
 
 /* REMOVE ME - dashed lines and height for debugging */
+.container{
+  width:100%
+}
 #mainColumn {
   outline: 1px dashed orange;
-  height: 200px;
+  height: 500px;
+  width:50%;
+
 }
+
+
 
 /* Your css code here! */
