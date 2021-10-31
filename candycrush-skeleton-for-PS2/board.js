@@ -38,7 +38,7 @@ var Board = function(size)
   {
     this.square[i] = [];
   }
-
+ 
   /*
    * Returns true/false depending on whether row and column
    * identify a valid square on the board.

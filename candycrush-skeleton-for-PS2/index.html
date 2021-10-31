@@ -68,6 +68,7 @@ var DEFAULT_BOARD_SIZE = 8;
 var board;
 var rules;
 
+
 // initialize board
 if ($.getUrlVar('size') && $.getUrlVar('size') >= 3) {
   board = new Board($.getUrlVar('size'));
@@ -83,6 +84,26 @@ rules = new Rules(board);
 $(document).ready(function()
 {
   // Your code here.
+
+  var table = $('<table>').addClass('board');
+  var arr = ['a','b','c','d','e','f','g','h']
+  var id = 0;
+    for(j=1;j<DEFAULT_BOARD_SIZE + 1;j++){
+      var rowInfo = $('<tr>')
+      $(table).append(rowInfo)
+        for(i=1;i<DEFAULT_BOARD_SIZE + 1;i++){
+          id++;
+          var columnInfo = $('<td>').attr('id',id).text(arr[i -1 ] + j);
+          table.append(columnInfo);
+        }
+    }
+  
+  $('#board').append(table);
+  board = new Board(DEFAULT_BOARD_SIZE);
+  //console.log(parseInt(Math.random(5)*100))
+
+  //console.log(board);
+  
 });
 
 
@@ -93,6 +114,13 @@ $(document).ready(function()
 $(board).on('add', function(e, info)
 {
   // Your code here.
+  for(j=1;j<DEFAULT_BOARD_SIZE + 1;j++){
+      for(i=1;i<DEFAULT_BOARD_SIZE + 1;i++){
+        board.addCandy(Candy.color(parseInt(Math.random(5)*100),j,i,j,i))
+      }
+  }
+  console.log(board.square)
+
 });
 
 // move a candy on the board
@@ -139,7 +167,7 @@ $(document).on('keydown', function(evt) {
       <div>
       <!-- Column 1 Code Here -->
       Column 1
-      <h1>Candy Crush</h1>
+      <h1><b>Candy Crush</b></h1>
       <button class="btn">New Game</button>
 
       </div>
@@ -148,8 +176,10 @@ $(document).on('keydown', function(evt) {
     <div class="col-md-4" id="mainColumn">
 
       <!-- Column 2 Code Here -->
-      Column 2
-      <table id="game-board"></table>
+  
+      <div id="board">
+
+      </div>
 
     </div>
 
@@ -157,6 +187,12 @@ $(document).on('keydown', function(evt) {
 
       <!-- Column 3 Code Here -->
       Column 3
+      <div>Move:<input></input></div>
+      <button class="btn" id="left">	&larr;</button>
+      <button class="btn" id="up">	&uarr;</button>
+      <button class="btn" id="right">	&rarr;</button>
+      <button class="btn" id="down">	&darr;</button>
+      <button class="btn" id="crush">	Crush Once</button>
 
     </div>
   </div> <!-- class="row" -->

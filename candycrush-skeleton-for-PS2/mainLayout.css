@@ -13,10 +13,31 @@
   width: 25%;
 }
 
-#game-board{
-  height:360px;
-  width: 360px;
+
+table{
+  width:360px;
+  height: 360px;
 }
+
+tr{
+  border: 1px solid black;
+}
+
+td{
+  border: 1px solid black;
+}
+
+#board{
+  height: 360x;
+  width: 360px;
+  border: 1px solid black;
+  
+}
+
+h1{
+  color:red;
+}
+
 
 
 /* Your css code here! */
