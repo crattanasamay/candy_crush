@@ -67,6 +67,7 @@ var DEFAULT_BOARD_SIZE = 8;
 // data model at global scope for easier debugging
 var board;
 var rules;
+var arr = ['a','b','c','d','e','f','g','h'];
 
 
 // initialize board
@@ -84,9 +85,8 @@ rules = new Rules(board);
 $(document).ready(function()
 {
   // Your code here.
-
+  board = new Board(DEFAULT_BOARD_SIZE);
   var table = $('<table>').addClass('board');
-  var arr = ['a','b','c','d','e','f','g','h']
   var id = 0;
     for(j=1;j<DEFAULT_BOARD_SIZE + 1;j++){
       var rowInfo = $('<tr>')
@@ -94,15 +94,16 @@ $(document).ready(function()
         for(i=1;i<DEFAULT_BOARD_SIZE + 1;i++){
           id++;
           var columnInfo = $('<td>').attr('id',id).text(arr[i -1 ] + j);
+          console.log(Math.random(.5))
+          board.addCandy(Candy.colors[parseInt(Math.random(5)*10)],j-1,i-1,j-1,i-1);
           table.append(columnInfo);
         }
     }
   
   $('#board').append(table);
-  board = new Board(DEFAULT_BOARD_SIZE);
   //console.log(parseInt(Math.random(5)*100))
 
-  //console.log(board);
+  console.log(board);
   
 });
 
@@ -116,7 +117,7 @@ $(board).on('add', function(e, info)
   // Your code here.
   for(j=1;j<DEFAULT_BOARD_SIZE + 1;j++){
       for(i=1;i<DEFAULT_BOARD_SIZE + 1;i++){
-        board.addCandy(Candy.color(parseInt(Math.random(5)*100),j,i,j,i))
+        
       }
   }
   console.log(board.square)
@@ -145,6 +146,7 @@ $(board).on('scoreUpdate', function(e, info)
 $(document).on('click', "#buttonIDhere", function(evt)
 {
   // Your code here.
+  $('#new_game').click('add')
 });
 
 // keyboard events arrive here
@@ -168,7 +170,7 @@ $(document).on('keydown', function(evt) {
       <!-- Column 1 Code Here -->
       Column 1
       <h1><b>Candy Crush</b></h1>
-      <button class="btn">New Game</button>
+      <button class="btn" id="new_game">New Game</button>
 
       </div>
   </div>
