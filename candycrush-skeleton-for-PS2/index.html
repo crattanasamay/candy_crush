@@ -40,7 +40,7 @@ Collaborators:
 // By default, the first board loaded by your page will be the same 
 // each time you load (which is accomplished by "seeding" the random
 // number generator. This makes testing (and grading!) easier!
-Math.seedrandom(0);
+Math.seedrandom();
 
 
 // A short jQuery extension to read query parameters from the URL.
@@ -82,35 +82,26 @@ rules = new Rules(board);
 
 // Final initialization entry point: the Javascript code inside this block
 // runs at the end of start-up when the page has finished loading.
-$(document).ready(function loadBoard()
+$(document).ready(function()
 {
-  // Your code here.
-  
-  // var table = $('<table>').addClass('board');
-  // var id = 0;
-  //   for(j=1;j<DEFAULT_BOARD_SIZE + 1;j++){
-  //     var rowInfo = $('<tr>')
-  //     $(table).append(rowInfo)
-  //       for(i=1;i<DEFAULT_BOARD_SIZE + 1;i++){
-  //         id++;
-  //         var candyColor = Candy.colors[Math.floor(Math.random()*5)];
-  //         if(candyColor == "blue"){
-  //           var columnInfo = $('<td>').attr('id',id).text(arr[i -1 ] + j).css({'background': candyColor,'color':'white'});
-  //         }else{
-  //           var columnInfo = $('<td>').attr('id',id).text(arr[i -1 ] + j).css('background',candyColor);
+  rules.prepareNewGame();
+  var table = $('<table>').addClass('board');
+  var id = 0;
+    for(j=1;j<DEFAULT_BOARD_SIZE + 1;j++){
+      var rowInfo = $('<tr>')
+      $(table).append(rowInfo)
+        for(i=1;i<DEFAULT_BOARD_SIZE + 1;i++){
+          var columnInfo = $('<td>').attr('id',id).text(arr[i -1 ] + j);
+          table.append(columnInfo);
+          id++;
+        }
+    }
+    //console.log(board.getAllCandies())
+  //$('').css('background','yellow');
 
-  //         }
-  //         //board.addCandy(candyColor,j-1,i-1,j-1,i-1);
-
-  //         table.append(columnInfo);
-  //       }
-  //   }
-  
-  // $('#board').append(table);
-  
-  //console.log(parseInt(Math.random(5)*100))
-    rules.prepareNewGame();
-  
+  $('#board').append(table);
+  $('#32').css('background-color','red')
+  //console.log(id)
 });
 
 
@@ -118,34 +109,17 @@ $(document).ready(function loadBoard()
 // access the candy object with info.candy
 
 // add a candy to the board
-$(board).one('add', function(e, info)
+$(board).on('add',function(e, info)
 {
   // Your code here.
-  var table = $('<table>').addClass('board');
-  var id = 0;
-    for(j=1;j<DEFAULT_BOARD_SIZE + 1;j++){
-      var rowInfo = $('<tr>')
-      $(table).append(rowInfo)
-        for(i=1;i<DEFAULT_BOARD_SIZE + 1;i++){
-          id++;
-          var candyColor = Candy.colors[Math.floor(Math.random()*5)];
-          var boardColor = board.getCandyAt(j-1,i-1);
-          
-          console.log(getColor);
-          if(candyColor == "blue"){
-            var columnInfo = $('<td>').attr('id',id).text(arr[i -1 ] + j).css({'background': candyColor,'color':'white'});
-          }else{
-            var columnInfo = $('<td>').attr('id',id).text(arr[i -1 ] + j).css('background',candyColor);
+  //console.log(info.candy.color)
 
-          }
-          //board.addCandy(candyColor,j-1,i-1,j-1,i-1);
+  var id = info.candy.row * 7 + info.candy.col  + info.candy.row;
+  //console.log(id)
+  var selector = '#' + id;
+  console.log(selector);
 
-          table.append(columnInfo);
-        }
-    }
-  
-  $('#board').append(table);
-  console.log(board)
+ 
 
 });
 
@@ -175,10 +149,14 @@ $(document).on('click', "#buttonIDhere", function(evt)
 });
 
 // keyboard events arrive here
-$(document).on('keydown', function(evt) {
+$("#userInput").on('keydown', function(evt) {
   // Your code here.
+  alert("Handler for keydown called.");
 });
 
+$("#newGame").on('click',function (e,info){
+  rules.prepareNewGame();
+});
 
 
 </script>
@@ -195,7 +173,7 @@ $(document).on('keydown', function(evt) {
       <!-- Column 1 Code Here -->
       Column 1
       <h1><b>Candy Crush</b></h1>
-      <button class="btn" id="add">New Game</button>
+      <button class="btn" id="newGame">New Game</button>
 
       </div>
   </div>
@@ -204,7 +182,7 @@ $(document).on('keydown', function(evt) {
 
       <!-- Column 2 Code Here -->
   
-      <div id="board" onload='loadBoard()'>
+      <div id="board" >
 
       </div>
 
@@ -214,7 +192,7 @@ $(document).on('keydown', function(evt) {
 
       <!-- Column 3 Code Here -->
       Column 3
-      <div>Move:<input></input></div>
+      <div>Move:<input id="userInput"></input></div>
       <button class="btn" id="left">	&larr;</button>
       <button class="btn" id="up">	&uarr;</button>
       <button class="btn" id="right">	&rarr;</button>
