@@ -31,6 +31,7 @@ Collaborators:
 <script src=
   "https://cdnjs.cloudflare.com/ajax/libs/seedrandom/2.4.2/seedrandom.js">
 </script>
+
 <script src="candy.js"></script>
 <script src="board.js"></script>
 <script src="rules.js"></script>
@@ -100,7 +101,6 @@ $(document).ready(function()
   //$('').css('background','yellow');
 
   $('#board').append(table);
-  $('#32').css('background-color','red')
   //console.log(id)
 });
 
@@ -111,17 +111,14 @@ $(document).ready(function()
 // add a candy to the board
 $(board).on('add',function(e, info)
 {
-  // Your code here.
-  //console.log(info.candy.color)
+  
 
   var id = info.candy.row * 7 + info.candy.col  + info.candy.row;
-  //console.log(id)
-  var selector = '#' + id;
-  console.log(selector);
 
- 
-
+  
 });
+
+
 
 // move a candy on the board
 $(board).on('move', function(e, info)
