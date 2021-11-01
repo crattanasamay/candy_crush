@@ -82,7 +82,7 @@ rules = new Rules(board);
 
 // Final initialization entry point: the Javascript code inside this block
 // runs at the end of start-up when the page has finished loading.
-$(document).ready(function()
+$(document).ready(function loadBoard()
 {
   // Your code here.
   
@@ -109,7 +109,7 @@ $(document).ready(function()
   // $('#board').append(table);
   
   //console.log(parseInt(Math.random(5)*100))
-
+    rules.prepareNewGame();
   
 });
 
@@ -118,9 +118,33 @@ $(document).ready(function()
 // access the candy object with info.candy
 
 // add a candy to the board
-$(board).on('add', function(e, info)
+$(board).one('add', function(e, info)
 {
   // Your code here.
+  var table = $('<table>').addClass('board');
+  var id = 0;
+    for(j=1;j<DEFAULT_BOARD_SIZE + 1;j++){
+      var rowInfo = $('<tr>')
+      $(table).append(rowInfo)
+        for(i=1;i<DEFAULT_BOARD_SIZE + 1;i++){
+          id++;
+          var candyColor = Candy.colors[Math.floor(Math.random()*5)];
+          var boardColor = board.getCandyAt(j-1,i-1);
+          
+          console.log(getColor);
+          if(candyColor == "blue"){
+            var columnInfo = $('<td>').attr('id',id).text(arr[i -1 ] + j).css({'background': candyColor,'color':'white'});
+          }else{
+            var columnInfo = $('<td>').attr('id',id).text(arr[i -1 ] + j).css('background',candyColor);
+
+          }
+          //board.addCandy(candyColor,j-1,i-1,j-1,i-1);
+
+          table.append(columnInfo);
+        }
+    }
+  
+  $('#board').append(table);
   console.log(board)
 
 });
@@ -180,7 +204,7 @@ $(document).on('keydown', function(evt) {
 
       <!-- Column 2 Code Here -->
   
-      <div id="board">
+      <div id="board" onload='loadBoard()'>
 
       </div>
 
