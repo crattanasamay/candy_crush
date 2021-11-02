@@ -85,7 +85,6 @@ rules = new Rules(board);
 // runs at the end of start-up when the page has finished loading.
 $(document).ready(function()
 {
-  rules.prepareNewGame();
   var table = $('<table>').addClass('board');
   var id = 0;
     for(j=1;j<DEFAULT_BOARD_SIZE + 1;j++){
@@ -97,11 +96,9 @@ $(document).ready(function()
           id++;
         }
     }
-    //console.log(board.getAllCandies())
-  //$('').css('background','yellow');
-
   $('#board').append(table);
   //console.log(id)
+  rules.prepareNewGame();
 });
 
 
@@ -114,6 +111,7 @@ $(board).on('add',function(e, info)
   
 
   var id = info.candy.row * 7 + info.candy.col  + info.candy.row;
+  $('#'+id).css('background-color',info.candy.color)
 
   
 });
