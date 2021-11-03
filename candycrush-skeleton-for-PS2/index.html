@@ -41,7 +41,7 @@ Collaborators:
 // By default, the first board loaded by your page will be the same 
 // each time you load (which is accomplished by "seeding" the random
 // number generator. This makes testing (and grading!) easier!
-Math.seedrandom();
+Math.seedrandom(0);
 
 
 // A short jQuery extension to read query parameters from the URL.
@@ -98,6 +98,13 @@ $(document).ready(function()
     }
   $('#board').append(table);
   rules.prepareNewGame();
+  $("#left").prop("disabled",true);
+  $("#right").prop("disabled",true);
+  $("#up").prop("disabled",true);
+  $("#down").prop("disabled",true);
+  $("#crush").prop("disabled",true);
+
+
   //console.log(board)
  
 });
@@ -204,8 +211,18 @@ $("#newGame").on('click',function (e){
   //console.log(board);
 });
 
-$('#userInput').on('keydown',function(e){
-  console.log('helo');
+$('#userInput').on('keyup',function(e){
+  
+  var filterInput = new RegExp('[a-h][1-8]')
+  if(filterInput.test($('#userInput').val()) && $('#userInput').val().length == 2){
+    var userInput = $('#userInput').val()
+    var col = userInput[0].charCodeAt(0) - 97
+    var row = userInput[1] - 1
+    var candy = board.getCandyAt(row,col)
+    console.log(candy)
+    console.log(rules.getCandiesToCrushGivenMove(candy,'up'))
+
+  }
 });
 </script>
 
