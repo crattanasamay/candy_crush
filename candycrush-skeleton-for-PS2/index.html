@@ -116,7 +116,6 @@ $(document).ready(function()
 // add a candy to the board
 $(board).on('add',function(e, info)
 {
-  var id = info.candy.row * 7 + info.candy.col  + info.candy.row;
   if(info.candy.color == 'yellow'){
     $('[row="' + info.candy.row + '"][col="'+info.candy.col+'"]').css({'background-color':info.candy.color,'color':'black'})
   }
@@ -143,8 +142,26 @@ $(board).on('add',function(e, info)
 // move a candy on the board
 $(board).on('move', function(e, info)
 {
-  candy = board.getCandyAt(info.toRow,info.toCol)
-  $('[row="' + info.toRow + '"][col="'+info.toCol+'"]').css('background-color',candy.color)
+  var candy = board.getCandyAt(info.toRow,info.toCol)
+  if(candy.color == 'yellow'){
+    $('[row="' + info.toRow + '"][col="'+info.toCol+'"]').css({'background-color':candy.color,'color':'black'})
+  }
+  if(candy.color == 'purple'){
+    $('[row="' + info.toRow + '"][col="'+info.toCol+'"]').css({'background-color':candy.color,'color':'white'})
+  }
+  if(candy.color == 'red'){
+    $('[row="' + info.toRow + '"][col="'+info.toCol+'"]').css({'background-color':candy.color,'color':'white'})
+  }
+  if(candy.color == 'blue'){
+    $('[row="' + info.toRow + '"][col="'+info.toCol+'"]').css({'background-color':candy.color,'color':'white'})
+  }
+  if(candy.color == 'orange'){
+    $('[row="' + info.toRow + '"][col="'+info.toCol+'"]').css({'background-color':candy.color,'color':'black'})
+  }
+  if(candy.color == 'green'){
+    $('[row="' + info.toRow + '"][col="'+info.toCol+'"]').css({'background-color':candy.color,'color':'black'})
+  }
+ 
   
 });
 
@@ -177,9 +194,8 @@ $(board).on('scoreUpdate', function(e, info)
 <div class="container">
   <div class="row">
     <div class="col-md-4" id="firstColumn">
-      <div>
+      <div class="center">
       <!-- Column 1 Code Here -->
-      Column 1
       <h1><b>Candy Crush</b></h1>
       <button class="btn" id="newGame">New Game</button>
 
@@ -190,7 +206,7 @@ $(board).on('scoreUpdate', function(e, info)
 
       <!-- Column 2 Code Here -->
   
-      <div id="board" >
+      <div id="board" class="center">
 
       </div>
 
@@ -199,13 +215,17 @@ $(board).on('scoreUpdate', function(e, info)
     <div class="col-md-4" id="lastColumn">
 
       <!-- Column 3 Code Here -->
-      Column 3
       <div>Move:<input id="userInput"></input></div>
-      <button class="btn" id="left">	&larr;</button>
-      <button class="btn" id="up">	&uarr;</button>
-      <button class="btn" id="right">	&rarr;</button>
-      <button class="btn" id="down">	&darr;</button>
-      <button class="btn" id="crush">	Crush Once</button>
+      <div class="center">
+        <button class="btn" id="left">	&larr;</button>
+        <button class="btn" id="up">	&uarr;</button>
+        <button class="btn" id="right">	&rarr;</button>
+        <button class="btn" id="down">	&darr;</button>
+      </div>
+      <div class="center">      
+        <button class="btn" id="crush">	Crush Once</button>
+      </div>
+
 
     </div>
   </div> <!-- class="row" -->
@@ -221,12 +241,6 @@ $("#newGame").on('click',function (e){
 
 });
 
-// $("#debugger").on('click',function (e){
- 
-//  console.log(rules.getCandyCrushes())
-//  console.log(board.getCandyAt(1,2))
-
-// });
 
 $('#userInput').on('keyup',function(e){
 
@@ -270,7 +284,7 @@ $(document).on('click', "#up", function(evt)
   var row = userInput[1] - 1
   var candy = board.getCandyAt(row,col)
   var candy2 = board.getCandyInDirection(candy,'up')
-  var candiesCrush = rules.getCandiesToCrushGivenMove(candy,'up')
+  //var candiesCrush = rules.getCandiesToCrushGivenMove(candy,'up')
   //console.log(rules.getCandiesToCrushGivenMove(candy,'up'))
 
   board.flipCandies(candy,candy2)
@@ -279,20 +293,23 @@ $(document).on('click', "#up", function(evt)
   $('#userInput').val('')
   $(document).on('click', "#crush", function(evt)
   {
-    //console.log(candiesCrush)
-    for(i=0;i<candiesCrush.length;i++){
-      board.remove(candiesCrush[i])
-    }
-    rules.moveCandiesDown();
     
-      $('#userInput').focus();
-      $('#crush').prop('disabled',true)
-   
+    var candiesCrush = rules.getCandyCrushes()
+    if(candiesCrush.length != 0){
+      for(i=0;i<candiesCrush[0].length;i++){
+        board.remove(candiesCrush[0][i])
+      }
+    
+    setTimeout(function(){
+      rules.moveCandiesDown()
+      var candiesCrush = rules.getCandyCrushes();
+      if(candiesCrush.length == 0){
+        $('#userInput').focus();
+        $('#crush').prop('disabled',true)
+      }
+    },500)
 
- 
-
-
-
+    }
 
   });
 
