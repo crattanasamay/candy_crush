@@ -1,7 +1,7 @@
 <!--
 CandyCrush
-Your Name:
-Collaborators:
+Your Name: Chris Rattanasamay
+Collaborators: No one
 -->
 <!DOCTYPE html>
 <html>
@@ -193,7 +193,7 @@ $(board).on('scoreUpdate', function(e, info)
 
 <div class="container">
   <div class="row">
-    <div class="col-md-4" id="firstColumn">
+    <div class="col-md-3 d-flex justify-content-center align-items-center" id="firstColumn">
       <div class="center">
       <!-- Column 1 Code Here -->
       <h1><b>Candy Crush</b></h1>
@@ -202,29 +202,45 @@ $(board).on('scoreUpdate', function(e, info)
       </div>
   </div>
 
-    <div class="col-md-4" id="mainColumn">
+    <div class="col-md-6 d-flex justify-content-center align-items-center" id="mainColumn">
 
       <!-- Column 2 Code Here -->
   
-      <div id="board" class="center">
+      <div id="board" class="d-flex align-content-end flex-wrap">
 
       </div>
 
     </div>
 
-    <div class="col-md-4" id="lastColumn">
+    <div class="col-md-3 justify-content-center align-items-center" id="lastColumn">
 
       <!-- Column 3 Code Here -->
-      <div>Move:<input id="userInput"></input></div>
-      <div class="center">
+      <div class="row h-25 justify-content-center">        
+        <div class="justify-content-center">Move:<input id="userInput">
+        </input>
+      </div>
+    </div>
+    <div class="row h-50">
+      <div class="col-12">
+      
+        
         <button class="btn" id="left">	&larr;</button>
         <button class="btn" id="up">	&uarr;</button>
         <button class="btn" id="right">	&rarr;</button>
         <button class="btn" id="down">	&darr;</button>
+       
+  
+     </div>
+    </div>
+    <div class="row justify-content-center">
+      <div>
+        <button class="btn" id="crush">Crush Once</button>
       </div>
-      <div class="center">      
-        <button class="btn" id="crush">	Crush Once</button>
-      </div>
+    </div>
+      
+        
+       
+        
 
 
     </div>
@@ -330,6 +346,27 @@ $(document).on('click', "#down", function(evt)
   $('#down').prop('disabled',true)
   $('#crush').prop('disabled',false)
   $('#userInput').val('')
+  $(document).on('click', "#crush", function(evt)
+  {
+    
+    var candiesCrush = rules.getCandyCrushes()
+    if(candiesCrush.length != 0){
+      for(i=0;i<candiesCrush[0].length;i++){
+        board.remove(candiesCrush[0][i])
+      }
+    
+    setTimeout(function(){
+      rules.moveCandiesDown()
+      var candiesCrush = rules.getCandyCrushes();
+      if(candiesCrush.length == 0){
+        $('#userInput').focus();
+        $('#crush').prop('disabled',true)
+      }
+    },500)
+
+    }
+
+  });
 
 
 
@@ -350,6 +387,27 @@ $(document).on('click', "#left", function(evt)
   $('#left').prop('disabled',true)
   $('#crush').prop('disabled',false)
   $('#userInput').val('')
+  $(document).on('click', "#crush", function(evt)
+  {
+    
+    var candiesCrush = rules.getCandyCrushes()
+    if(candiesCrush.length != 0){
+      for(i=0;i<candiesCrush[0].length;i++){
+        board.remove(candiesCrush[0][i])
+      }
+    
+    setTimeout(function(){
+      rules.moveCandiesDown()
+      var candiesCrush = rules.getCandyCrushes();
+      if(candiesCrush.length == 0){
+        $('#userInput').focus();
+        $('#crush').prop('disabled',true)
+      }
+    },500)
+
+    }
+
+  });
 
 
 
@@ -370,6 +428,27 @@ $(document).on('click', "#right", function(evt)
   $('#right').prop('disabled',true)
   $('#crush').prop('disabled',false)
   $('#userInput').val('')
+  $(document).on('click', "#crush", function(evt)
+  {
+    
+    var candiesCrush = rules.getCandyCrushes()
+    if(candiesCrush.length != 0){
+      for(i=0;i<candiesCrush[0].length;i++){
+        board.remove(candiesCrush[0][i])
+      }
+    
+    setTimeout(function(){
+      rules.moveCandiesDown()
+      var candiesCrush = rules.getCandyCrushes();
+      if(candiesCrush.length == 0){
+        $('#userInput').focus();
+        $('#crush').prop('disabled',true)
+      }
+    },500)
+
+    }
+
+  });
 
 
 
