@@ -91,7 +91,7 @@ $(document).ready(function()
       var rowInfo = $('<tr>')
       $(table).append(rowInfo)
         for(i=1;i<DEFAULT_BOARD_SIZE + 1;i++){
-          var columnInfo = $('<td>').attr({'id':id,'row':j-1,'col':i-1}).text(arr[i -1 ] + j);
+          var columnInfo = $('<td>').attr({'row':j-1,'col':i-1}).text(arr[i -1 ] + j);
           table.append(columnInfo);
           id++;
         }
@@ -117,7 +117,7 @@ $(document).ready(function()
 $(board).on('add',function(e, info)
 {
   var id = info.candy.row * 7 + info.candy.col  + info.candy.row;
-  $('#'+id).css('background-color',info.candy.color)
+  $('[row="' + info.candy.row + '"][col="'+info.candy.col+'"]').css('background-color',info.candy.color)
   
 });
 
@@ -126,13 +126,19 @@ $(board).on('add',function(e, info)
 // move a candy on the board
 $(board).on('move', function(e, info)
 {
-  // Your code here.
+  candy = board.getCandyAt(info.toRow,info.toCol)
+  //console.log(info)
+  $('[row="' + info.toRow + '"][col="'+info.toCol+'"]').css('background-color',candy.color)
+  
 });
 
 // remove a candy from the board
 $(board).on('remove', function(e, info)
 {
-  // Your code here.
+  console.log(info)
+
+
+  
 });
 
 // move a candy on the board
@@ -141,12 +147,7 @@ $(board).on('scoreUpdate', function(e, info)
   // Your code here. To be implemented in pset 2.
 });
 
-// Button Events
-$(document).on('click', "#buttonIDhere", function(evt)
-{
-  // Your code here.
-  
-});
+
 
 
 
@@ -203,45 +204,141 @@ $("#newGame").on('click',function (e){
  
   board.clear();
   rules.prepareNewGame();
-  //console.log(board);
+
 });
 
 $('#userInput').on('keyup',function(e){
 
-  
   $('#up').prop('disabled',true)
   $('#down').prop('disabled',true)
   $('#left').prop('disabled',true)
   $('#right').prop('disabled',true)
 
-
-
   
   var filterInput = new RegExp('[a-h][1-8]')
-  if(filterInput.test($('#userInput').val()) && $('#userInput').val().length == 2){
+  if(filterInput.test($('#userInput').val()) && $('#userInput').val().length == 2 && $("#crush").is(":disabled")){
     var userInput = $('#userInput').val()
     var col = userInput[0].charCodeAt(0) - 97
     var row = userInput[1] - 1
     var candy = board.getCandyAt(row,col)
     
     if(rules.isMoveTypeValid(candy,'up')){
-      console.log(candy)
       $('#up').prop('disabled',false)
     }
     if(rules.isMoveTypeValid(candy,'down')){
-      console.log(candy)
       $('#down').prop('disabled',false)
     }
     if(rules.isMoveTypeValid(candy,'left')){
-      console.log(candy)
       $('#left').prop('disabled',false)
     }
     if(rules.isMoveTypeValid(candy,'right')){
-      console.log(candy)
       $('#right').prop('disabled',false)
     }
   }
 });
+
+
+// Button Events
+$(document).on('click', "#up", function(evt)
+{
+  $('#down').prop('disabled',true)
+  $('#left').prop('disabled',true)
+  $('#right').prop('disabled',true)
+  var userInput = $('#userInput').val()
+  var col = userInput[0].charCodeAt(0) - 97
+  var row = userInput[1] - 1
+  var candy = board.getCandyAt(row,col)
+  var candy2 = board.getCandyInDirection(candy,'up')
+  var candiesCrush = rules.getCandiesToCrushGivenMove(candy,'up')
+  //console.log(rules.getCandiesToCrushGivenMove(candy,'up'))
+
+  board.flipCandies(candy,candy2)
+  $('#up').prop('disabled',true)
+  $('#crush').prop('disabled',false)
+  $('#userInput').val('')
+  $(document).on('click', "#crush", function(evt)
+  {
+
+
+    //console.log(candiesCrush)
+    for(i=0;i<candiesCrush.length;i++){
+      console.log(candiesCrush[i])
+    }
+    $('#userInput').focus();
+
+    $('#crush').prop('disabled',true)
+
+
+
+
+  });
+
+
+
+
+
+});
+// Button Events
+$(document).on('click', "#down", function(evt)
+{
+  $('#up').prop('disabled',true)
+  $('#left').prop('disabled',true)
+  $('#right').prop('disabled',true)
+  var userInput = $('#userInput').val()
+  var col = userInput[0].charCodeAt(0) - 97
+  var row = userInput[1] - 1
+  var candy = board.getCandyAt(row,col)
+  var candy2 = board.getCandyInDirection(candy,'down')
+  board.flipCandies(candy,candy2)
+
+  $('#down').prop('disabled',true)
+  $('#crush').prop('disabled',false)
+  $('#userInput').val('')
+
+
+
+});
+// Button Events
+$(document).on('click', "#left", function(evt)
+{
+  $('#up').prop('disabled',true)
+  $('#down').prop('disabled',true)
+  $('#right').prop('disabled',true)
+  var userInput = $('#userInput').val()
+  var col = userInput[0].charCodeAt(0) - 97
+  var row = userInput[1] - 1
+  var candy = board.getCandyAt(row,col)
+  var candy2 = board.getCandyInDirection(candy,'left')
+  board.flipCandies(candy,candy2)
+
+  $('#left').prop('disabled',true)
+  $('#crush').prop('disabled',false)
+  $('#userInput').val('')
+
+
+
+
+});
+// Button Events
+$(document).on('click', "#right", function(evt)
+{
+  $('#up').prop('disabled',true)
+  $('#down').prop('disabled',true)
+  $('#left').prop('disabled',true)
+  var userInput = $('#userInput').val()
+  var col = userInput[0].charCodeAt(0) - 97
+  var row = userInput[1] - 1
+  var candy = board.getCandyAt(row,col)
+  var candy2 = board.getCandyInDirection(candy,'right')
+  board.flipCandies(candy,candy2)
+  $('#right').prop('disabled',true)
+  $('#crush').prop('disabled',false)
+  $('#userInput').val('')
+
+
+
+});
+
 
 
 </script>
