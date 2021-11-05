@@ -117,8 +117,25 @@ $(document).ready(function()
 $(board).on('add',function(e, info)
 {
   var id = info.candy.row * 7 + info.candy.col  + info.candy.row;
-  $('[row="' + info.candy.row + '"][col="'+info.candy.col+'"]').css('background-color',info.candy.color)
-  
+  if(info.candy.color == 'yellow'){
+    $('[row="' + info.candy.row + '"][col="'+info.candy.col+'"]').css({'background-color':info.candy.color,'color':'black'})
+  }
+  if(info.candy.color == 'purple'){
+    $('[row="' + info.candy.row + '"][col="'+info.candy.col+'"]').css({'background-color':info.candy.color,'color':'white'})
+  }
+  if(info.candy.color == 'red'){
+    $('[row="' + info.candy.row + '"][col="'+info.candy.col+'"]').css({'background-color':info.candy.color,'color':'white'})
+  }
+  if(info.candy.color == 'blue'){
+    $('[row="' + info.candy.row + '"][col="'+info.candy.col+'"]').css({'background-color':info.candy.color,'color':'white'})
+  }
+  if(info.candy.color == 'orange'){
+    $('[row="' + info.candy.row + '"][col="'+info.candy.col+'"]').css({'background-color':info.candy.color,'color':'black'})
+  }
+  if(info.candy.color == 'green'){
+    $('[row="' + info.candy.row + '"][col="'+info.candy.col+'"]').css({'background-color':info.candy.color,'color':'black'})
+  }
+   
 });
 
 
@@ -127,7 +144,6 @@ $(board).on('add',function(e, info)
 $(board).on('move', function(e, info)
 {
   candy = board.getCandyAt(info.toRow,info.toCol)
-  //console.log(info)
   $('[row="' + info.toRow + '"][col="'+info.toCol+'"]').css('background-color',candy.color)
   
 });
@@ -135,10 +151,8 @@ $(board).on('move', function(e, info)
 // remove a candy from the board
 $(board).on('remove', function(e, info)
 {
-  console.log(info)
-
-
-  
+  //console.log(info.fromRow,info.fromCol)
+  $('[row="' + info.fromRow + '"][col="'+info.fromCol+'"]').css({'background-color':'white','color':'white'})
 });
 
 // move a candy on the board
@@ -207,6 +221,13 @@ $("#newGame").on('click',function (e){
 
 });
 
+// $("#debugger").on('click',function (e){
+ 
+//  console.log(rules.getCandyCrushes())
+//  console.log(board.getCandyAt(1,2))
+
+// });
+
 $('#userInput').on('keyup',function(e){
 
   $('#up').prop('disabled',true)
@@ -258,24 +279,22 @@ $(document).on('click', "#up", function(evt)
   $('#userInput').val('')
   $(document).on('click', "#crush", function(evt)
   {
-
-
     //console.log(candiesCrush)
     for(i=0;i<candiesCrush.length;i++){
-      console.log(candiesCrush[i])
+      board.remove(candiesCrush[i])
     }
-    $('#userInput').focus();
+    rules.moveCandiesDown();
+    
+      $('#userInput').focus();
+      $('#crush').prop('disabled',true)
+   
 
-    $('#crush').prop('disabled',true)
+ 
 
 
 
 
   });
-
-
-
-
 
 });
 // Button Events

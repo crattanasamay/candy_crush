@@ -34,6 +34,7 @@ var Rules = function(board)
     {
       this.populateBoard()
       var crushable = this.getCandyCrushes();
+      //console.log(crushable)
       if (crushable.length == 0) break;
       this.removeCrushes(crushable);
     }
