@@ -148,11 +148,6 @@ $(document).on('click', "#buttonIDhere", function(evt)
   
 });
 
-// keyboard events arrive here
-$("#userInput").on('keydown', function(evt) {
-  // Your code here.
-  alert("Handler for keydown called.");
-});
 
 
 
@@ -212,6 +207,15 @@ $("#newGame").on('click',function (e){
 });
 
 $('#userInput').on('keyup',function(e){
+
+  
+  $('#up').prop('disabled',true)
+  $('#down').prop('disabled',true)
+  $('#left').prop('disabled',true)
+  $('#right').prop('disabled',true)
+
+
+
   
   var filterInput = new RegExp('[a-h][1-8]')
   if(filterInput.test($('#userInput').val()) && $('#userInput').val().length == 2){
@@ -219,11 +223,27 @@ $('#userInput').on('keyup',function(e){
     var col = userInput[0].charCodeAt(0) - 97
     var row = userInput[1] - 1
     var candy = board.getCandyAt(row,col)
-    console.log(candy)
-    console.log(rules.getCandiesToCrushGivenMove(candy,'up'))
-
+    
+    if(rules.isMoveTypeValid(candy,'up')){
+      console.log(candy)
+      $('#up').prop('disabled',false)
+    }
+    if(rules.isMoveTypeValid(candy,'down')){
+      console.log(candy)
+      $('#down').prop('disabled',false)
+    }
+    if(rules.isMoveTypeValid(candy,'left')){
+      console.log(candy)
+      $('#left').prop('disabled',false)
+    }
+    if(rules.isMoveTypeValid(candy,'right')){
+      console.log(candy)
+      $('#right').prop('disabled',false)
+    }
   }
 });
+
+
 </script>
 
 </html>
